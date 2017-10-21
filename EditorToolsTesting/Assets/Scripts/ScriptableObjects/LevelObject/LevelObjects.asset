@@ -9,10 +9,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8b835940c9b37a459fac85d4583030e, type: 3}
-  m_Name: LOTest
+  m_Name: LevelObjects
   m_EditorClassIdentifier: 
   objects:
   - Name: Rock
     Prefab: {fileID: 1252616711110040, guid: 824e6373fdec6a84f8918217c21189dd, type: 2}
   - Name: Tree
     Prefab: {fileID: 1562336407425282, guid: edcd74af05581814db972eb7f4445007, type: 2}
+  - Name: Capsule
+    Prefab: {fileID: 1793509143369180, guid: af654ce1c65f4d44e9498a511dd98134, type: 2}
+  - Name: Cylinder
+    Prefab: {fileID: 1834259937568732, guid: a209ec6df816f4841a49d060b905f39a, type: 2}
+  - Name: Cube
+    Prefab: {fileID: 1579608321955982, guid: 8ce378cfcc1c57f408a8b92084bc4e0d, type: 2}
+  buildings:
+  - Name: Habitat
+    Prefab: {fileID: 1020723497586730, guid: 534054e2c5b8aaf4dadf25e6eb38d0c7, type: 2}

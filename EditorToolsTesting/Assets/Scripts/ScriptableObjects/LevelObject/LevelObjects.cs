@@ -14,5 +14,6 @@ public class LevelObjectData  {
 public class LevelObjects : ScriptableObject
 {
     public List<LevelObjectData> objects = new List<LevelObjectData>();
+    public List<LevelObjectData> buildings = new List<LevelObjectData>();
 
 }

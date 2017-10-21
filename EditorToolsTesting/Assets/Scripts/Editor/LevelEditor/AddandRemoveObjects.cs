@@ -38,14 +38,14 @@ public class AddandRemoveObjects : Editor {
         }
     }
 
-    static LevelObjects m_levelObjects;
+    static public LevelObjects m_levelObjects;
 
     static AddandRemoveObjects()
     {
         SceneView.onSceneGUIDelegate -= OnSceneGUI;
         SceneView.onSceneGUIDelegate += OnSceneGUI;
 
-        m_levelObjects = AssetDatabase.LoadAssetAtPath<LevelObjects>( "Assets/ScriptableObjects/LOTest.asset");
+        m_levelObjects = AssetDatabase.LoadAssetAtPath<LevelObjects>( "Assets/Scripts/ScriptableObjects/LevelObject/LevelObjects.asset");
 
     }
 
@@ -62,7 +62,7 @@ public class AddandRemoveObjects : Editor {
         if (EditorPrefs.GetBool("IsLevelEditorEnabled", false) == false)
             return;
         
-        DrawCustomObjectButtons(sceneView);
+       // DrawCustomObjectButtons(sceneView);
         HandleLevelEditorPlacement();
 
     }
