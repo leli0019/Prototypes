@@ -30,11 +30,12 @@ public class EditorHandles : Editor {
 
         bool isLevelEditorEnabled = EditorPrefs.GetBool("IsLevelEditorEnabled", true);
 
-        if(isLevelEditorEnabled == false)
-        {
+        if(isLevelEditorEnabled == false)        
             return;
-        }
+        
 
+        if (Tools.SelectedLevelEditorTool == 0)
+            return;
 
         UpdateHandlePosition();
         UpdateIsMouseInValidArea(sceneView.position);
@@ -63,7 +64,7 @@ public class EditorHandles : Editor {
         {
             Vector3 offset = Vector3.zero;
 
-            if (EditorPrefs.GetBool("SelectBlockNextToMousePosition", true))
+            if (EditorPrefs.GetBool("IsLevelEditorEnabled", true))
             {
                 //offset = hit.normal;
 
@@ -72,7 +73,7 @@ public class EditorHandles : Editor {
                 //currentHandlePos.z = Mathf.Floor(hit.point.z - hit.normal.z * 0.001f + offset.z);
 
                 //currentHandlePos += new Vector3(0.5f, 0.5f, 0.5f);
-
+                
                 currentHandlePos = hit.point;
             }
 
@@ -94,9 +95,8 @@ public class EditorHandles : Editor {
     {
         if (isMouseInValidArea == false)        
             return;
-        
 
-        Handles.color = new Color(EditorPrefs.GetFloat("CubeHandleColorR", 1f), EditorPrefs.GetFloat("CubeHandleColorG", 1f), EditorPrefs.GetFloat("CubeHandleColorB", 0f));
+        Handles.color = Color.green;
 
         DrawHandlesCube(currentHandlePos);
     }
@@ -113,9 +113,7 @@ public class EditorHandles : Editor {
         Vector3 p7 = center - Vector3.up * 0.5f - Vector3.right * 0.5f - Vector3.forward * 0.5f;
         Vector3 p8 = center - Vector3.up * 0.5f - Vector3.right * 0.5f + Vector3.forward * 0.5f;
 
-        //You can use Handles to draw 3d objects into the SceneView. If defined properly the
-        //user can even interact with the handles. For example Unitys move tool is implemented using Handles
-        //However here we simply draw a cube that the 3D position the mouse is pointing to
+      
         Handles.DrawLine(p1, p2);
         Handles.DrawLine(p2, p3);
         Handles.DrawLine(p3, p4);

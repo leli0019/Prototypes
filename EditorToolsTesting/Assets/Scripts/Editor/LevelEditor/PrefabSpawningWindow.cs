@@ -11,8 +11,9 @@ public class PrefabSpawningWindow : EditorWindow {
     public static void ShowWindow()
     {
         EditorWindow window = GetWindow<PrefabSpawningWindow>(false, "Prefabs", true);
+        window.minSize = new Vector2(210.0f, 500.0f);
     }
-
+    
     public void OnGUI()
     {
         MaxPrefabsPerColumn = (int)(position.width / prefabSize);
@@ -22,7 +23,12 @@ public class PrefabSpawningWindow : EditorWindow {
 
     static void DrawPrefabButtons()
     {
-        
+        GUILayout.BeginHorizontal();
+
+         string[] labels = new string[] { "None", "Remove", "Paint" };
+       Tools.SelectedLevelEditorTool =  GUILayout.SelectionGrid(Tools.SelectedLevelEditorTool, labels, 3);
+
+        GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
 
@@ -55,19 +61,17 @@ public class PrefabSpawningWindow : EditorWindow {
         bool isToggleDown = GUILayout.Toggle(isActive, previewImage, GUI.skin.button ,GUILayout.Width(prefabSize), GUILayout.Height(prefabSize));
 
 
-        if (isToggleDown == true && isActive == false)
-        {
+        if (isToggleDown == true && isActive == false)        
             AddandRemoveObjects.SelectedObject = index;
-           // Debug.Log(AddandRemoveObjects.SelectedObject);
 
-        }
+        
 
 
 
     }
     private void OnDestroy()
     {
-        Tools.DrawBoxHandle = false;
+        Tools.isLevelEditorEnabled = false;
         SceneView.RepaintAll();
     } 
 

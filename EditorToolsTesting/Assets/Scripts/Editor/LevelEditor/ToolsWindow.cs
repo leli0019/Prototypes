@@ -17,9 +17,9 @@ public class ToolsWindow : EditorWindow {
 
 
         // Tools.DrawBoxHandle = EditorGUILayout.Toggle("Create Objects", Tools.DrawBoxHandle , GUI.skin.button);
-         Tools.DrawBoxHandle = GUILayout.Button("Create Prefabs");
+         Tools.isLevelEditorEnabled = GUILayout.Button("Create Prefabs", GUILayout.Height(30.0f));
 
-        if (Tools.DrawBoxHandle)
+        if (Tools.isLevelEditorEnabled)
         {
             PrefabSpawningWindow.ShowWindow();
             this.Close();

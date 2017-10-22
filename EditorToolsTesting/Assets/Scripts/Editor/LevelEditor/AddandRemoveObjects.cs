@@ -64,6 +64,7 @@ public class AddandRemoveObjects : Editor {
         
        // DrawCustomObjectButtons(sceneView);
         HandleLevelEditorPlacement();
+       // DrawToolsMenu(sceneView.position);
 
     }
 
@@ -71,6 +72,9 @@ public class AddandRemoveObjects : Editor {
     {
         //if (EditorPrefs.GetBool("IsLevelEditorEnabled", false) == false)
         //    return;    
+
+        if (Tools.SelectedLevelEditorTool == 0)
+            return;
 
 
         int controlId = GUIUtility.GetControlID(FocusType.Passive);
@@ -81,9 +85,20 @@ public class AddandRemoveObjects : Editor {
             Event.current.shift == false &&
             Event.current.control == false)
         {
+            switch(Tools.SelectedLevelEditorTool)
+            {             
 
-            if(SelectedObject < m_levelObjects.objects.Count)
-                 AddBlock(EditorHandles.currentHandlePos, m_levelObjects.objects[SelectedObject].Prefab);
+                case 1:
+                    RemoveObject(EditorHandles.currentHandlePos);
+                    break;
+
+                case 2:
+                    if (SelectedObject < m_levelObjects.objects.Count)
+                        AddObject(EditorHandles.currentHandlePos, m_levelObjects.objects[SelectedObject].Prefab);
+                    break;
+            }
+
+            
         }
 
 
@@ -125,7 +140,7 @@ public class AddandRemoveObjects : Editor {
         }
 
     }
-    public static void AddBlock(Vector3 pos , GameObject prefab)
+    public static void AddObject(Vector3 pos , GameObject prefab)
     {
         if (prefab == null)
             return;
@@ -138,20 +153,25 @@ public class AddandRemoveObjects : Editor {
 
         UnityEditor.SceneManagement.EditorSceneManager.MarkAllScenesDirty();
 
+    }
 
-        //// GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //GameObject tree = (GameObject)Instantiate(Resources.Load("Tree"));
-        //tree.transform.SetParent(LevelParent);
-        //tree.transform.position = pos;
-        //tree.AddComponent<BoxCollider>();
-        //tree.tag = "LevelCube";
-        //tree.layer = LayerMask.NameToLayer( "Level" );
+    public static void RemoveObject(Vector3 pos)
+    {
+        if (m_levelParent.childCount <= 0)
+            return; 
 
-        //Undo.RegisterCreatedObjectUndo(tree, "Created " + tree.name);
+        for (int i = 0; i < m_levelParent.childCount; i++)
+        {
 
-        ////UnityEditor.SceneManagement.EditorSceneManager.MarkAllScenesDirty();
+            float distanceToObject = Vector3.Distance(m_levelParent.GetChild(i).transform.position, pos);
+            if(distanceToObject < 1.0f)
+            {
+                Undo.DestroyObjectImmediate(m_levelParent.GetChild(i).gameObject);
 
-
+                UnityEditor.SceneManagement.EditorSceneManager.MarkAllScenesDirty();
+                return;
+            }
+        }
     }
 
 
