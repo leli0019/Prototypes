@@ -62,15 +62,15 @@ public class AddandRemoveObjects : Editor {
         if (EditorPrefs.GetBool("IsLevelEditorEnabled", false) == false)
             return;
         
-       // DrawCustomObjectButtons(sceneView);
         HandleLevelEditorPlacement();
 
     }
 
     static void HandleLevelEditorPlacement()
-    {
-        //if (EditorPrefs.GetBool("IsLevelEditorEnabled", false) == false)
-        //    return;    
+    {      
+
+        if (Tools.SelectedLevelEditorTool == 0)
+            return;
 
 
         int controlId = GUIUtility.GetControlID(FocusType.Passive);
@@ -81,9 +81,19 @@ public class AddandRemoveObjects : Editor {
             Event.current.shift == false &&
             Event.current.control == false)
         {
+            switch(Tools.SelectedLevelEditorTool)
+            {    
+                case 1:
+                    RemoveObject(EditorHandles.currentHandlePos);
+                    break;
 
-            if(SelectedObject < m_levelObjects.objects.Count)
-                 AddBlock(EditorHandles.currentHandlePos, m_levelObjects.objects[SelectedObject].Prefab);
+                case 2:
+                    if (SelectedObject < m_levelObjects.objects.Count)
+                        AddObject(EditorHandles.currentHandlePos, m_levelObjects.objects[SelectedObject].Prefab);
+                    break;
+            }
+
+            
         }
 
 
@@ -125,33 +135,57 @@ public class AddandRemoveObjects : Editor {
         }
 
     }
-    public static void AddBlock(Vector3 pos , GameObject prefab)
+    public static void AddObject(Vector3 pos , GameObject prefab)
     {
         if (prefab == null)
             return;
 
-        GameObject newObject = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
-        newObject.transform.SetParent(LevelParent);
-        newObject.transform.position = pos;
+        Vector2 currentMousePos = new Vector2(Event.current.mousePosition.x, Event.current.mousePosition.y);
 
-        Undo.RegisterCreatedObjectUndo(newObject, "Create " + prefab.name);
+        Ray ray = HandleUtility.GUIPointToWorldRay(currentMousePos);
+        RaycastHit hit;
 
-        UnityEditor.SceneManagement.EditorSceneManager.MarkAllScenesDirty();
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Level")) == true)
+        {
+
+            GameObject newObject = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+            newObject.transform.SetParent(LevelParent);
+            newObject.transform.position = pos;
+
+            Renderer renderer = newObject.GetComponent<Renderer>();
+            Vector3 offset = newObject.transform.position - renderer.bounds.min;
+            newObject.transform.position += offset;
+
+            //Vector3 raisedPos = newObject.transform.position + new Vector3(0, newObject.transform.localScale.y * 0.5f, 0);
+            //newObject.transform.position = raisedPos;
+
+            Quaternion newRot = Quaternion.FromToRotation(newObject.transform.up, hit.normal);
+            newObject.transform.rotation = newRot;
 
 
-        //// GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //GameObject tree = (GameObject)Instantiate(Resources.Load("Tree"));
-        //tree.transform.SetParent(LevelParent);
-        //tree.transform.position = pos;
-        //tree.AddComponent<BoxCollider>();
-        //tree.tag = "LevelCube";
-        //tree.layer = LayerMask.NameToLayer( "Level" );
+            Undo.RegisterCreatedObjectUndo(newObject, "Create " + prefab.name);
 
-        //Undo.RegisterCreatedObjectUndo(tree, "Created " + tree.name);
+            UnityEditor.SceneManagement.EditorSceneManager.MarkAllScenesDirty();
+        }
+    }
 
-        ////UnityEditor.SceneManagement.EditorSceneManager.MarkAllScenesDirty();
+    public static void RemoveObject(Vector3 pos)
+    {
+        if (LevelParent.childCount <= 0)
+            return; 
 
+        for (int i = 0; i < LevelParent.childCount; i++)
+        {
+            Renderer renderer = LevelParent.GetChild(i).GetComponent<Renderer>();
 
+            float distanceToObject = Vector3.Distance(renderer.bounds.min, pos);
+            if(distanceToObject < 1.0f)
+            {
+                Undo.DestroyObjectImmediate(LevelParent.GetChild(i).gameObject);
+                UnityEditor.SceneManagement.EditorSceneManager.MarkAllScenesDirty();
+                return;
+            }
+        }
     }
 
 
