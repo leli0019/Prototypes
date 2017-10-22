@@ -26,7 +26,7 @@ public class PrefabSpawningWindow : EditorWindow {
         GUILayout.BeginHorizontal();
 
          string[] labels = new string[] { "None", "Remove", "Paint" };
-       Tools.SelectedLevelEditorTool =  GUILayout.SelectionGrid(Tools.SelectedLevelEditorTool, labels, 3);
+       Tools.SelectedLevelEditorTool =  GUILayout.SelectionGrid(Tools.SelectedLevelEditorTool, labels, 3, GUILayout.Height(30));
 
         GUILayout.EndHorizontal();
 

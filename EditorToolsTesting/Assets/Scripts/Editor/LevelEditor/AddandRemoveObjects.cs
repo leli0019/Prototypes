@@ -62,16 +62,12 @@ public class AddandRemoveObjects : Editor {
         if (EditorPrefs.GetBool("IsLevelEditorEnabled", false) == false)
             return;
         
-       // DrawCustomObjectButtons(sceneView);
         HandleLevelEditorPlacement();
-       // DrawToolsMenu(sceneView.position);
 
     }
 
     static void HandleLevelEditorPlacement()
-    {
-        //if (EditorPrefs.GetBool("IsLevelEditorEnabled", false) == false)
-        //    return;    
+    {      
 
         if (Tools.SelectedLevelEditorTool == 0)
             return;
@@ -86,19 +82,14 @@ public class AddandRemoveObjects : Editor {
             Event.current.control == false)
         {
             switch(Tools.SelectedLevelEditorTool)
-            {             
-
+            {    
                 case 1:
                     RemoveObject(EditorHandles.currentHandlePos);
                     break;
 
                 case 2:
                     if (SelectedObject < m_levelObjects.objects.Count)
-                    {
-                                          
-                            AddObject(EditorHandles.currentHandlePos, m_levelObjects.objects[SelectedObject].Prefab);
-                        
-                    }
+                        AddObject(EditorHandles.currentHandlePos, m_levelObjects.objects[SelectedObject].Prefab);
                     break;
             }
 
@@ -161,6 +152,13 @@ public class AddandRemoveObjects : Editor {
             newObject.transform.SetParent(LevelParent);
             newObject.transform.position = pos;
 
+            Renderer renderer = newObject.GetComponent<Renderer>();
+            Vector3 offset = newObject.transform.position - renderer.bounds.min;
+            newObject.transform.position += offset;
+
+            //Vector3 raisedPos = newObject.transform.position + new Vector3(0, newObject.transform.localScale.y * 0.5f, 0);
+            //newObject.transform.position = raisedPos;
+
             Quaternion newRot = Quaternion.FromToRotation(newObject.transform.up, hit.normal);
             newObject.transform.rotation = newRot;
 
@@ -173,17 +171,17 @@ public class AddandRemoveObjects : Editor {
 
     public static void RemoveObject(Vector3 pos)
     {
-        if (m_levelParent.childCount <= 0)
+        if (LevelParent.childCount <= 0)
             return; 
 
-        for (int i = 0; i < m_levelParent.childCount; i++)
+        for (int i = 0; i < LevelParent.childCount; i++)
         {
+            Renderer renderer = LevelParent.GetChild(i).GetComponent<Renderer>();
 
-            float distanceToObject = Vector3.Distance(m_levelParent.GetChild(i).transform.position, pos);
+            float distanceToObject = Vector3.Distance(renderer.bounds.min, pos);
             if(distanceToObject < 1.0f)
             {
-                Undo.DestroyObjectImmediate(m_levelParent.GetChild(i).gameObject);
-
+                Undo.DestroyObjectImmediate(LevelParent.GetChild(i).gameObject);
                 UnityEditor.SceneManagement.EditorSceneManager.MarkAllScenesDirty();
                 return;
             }
