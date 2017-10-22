@@ -79,14 +79,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\MonoBehaviour\Cheats\Cheats.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviour\Gizmos\RadiusGizmo.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\Grid\Grid.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\Mission\Goal.cs" />
-    <Compile Include="Assets\Scripts\MonoBehaviour\Mission\LocateProbe.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\Mission\Mission.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\Mission\Objective.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\Mission\ProbeMission.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviour\Mission\ProximityObjective.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\PlayerMovement\SimpleMove.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\LevelObject\LevelObjects.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\Objective\ScriptableZoneObjective.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

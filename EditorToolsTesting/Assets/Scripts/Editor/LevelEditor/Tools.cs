@@ -45,6 +45,16 @@ public class Tools
 
         }
     }
+    public static int ObjectiveSelected = 0;
+
+    //public static int ObjectiveSelected
+    //{
+    //    get { return EditorPrefs.GetInt("ObjectiveSelected", 0); }
+
+    //    set { EditorPrefs.SetInt("ObjectiveSelected", value); }
+        
+    //}
+
 
 
 }

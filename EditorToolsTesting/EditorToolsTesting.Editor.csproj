@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Editor\Cheats\CheatsWindow.cs" />
+    <Compile Include="Assets\Scripts\Editor\Gizmos\RadiusGizmoEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\Grid\GridEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\Grid\GridWindow.cs" />
     <Compile Include="Assets\Scripts\Editor\LevelEditor\AddandRemoveObjects.cs" />
@@ -131,6 +132,8 @@
     <Compile Include="Assets\Scripts\Editor\LevelEditor\PrefabSpawningWindow.cs" />
     <Compile Include="Assets\Scripts\Editor\LevelEditor\Tools.cs" />
     <Compile Include="Assets\Scripts\Editor\LevelEditor\ToolsWindow.cs" />
+    <Compile Include="Assets\Scripts\Editor\Objective\MissionEditorWindow.cs" />
+    <Compile Include="Assets\Scripts\Editor\Objective\ObjectiveEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\OpenScenes\OpenSceneWindow.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

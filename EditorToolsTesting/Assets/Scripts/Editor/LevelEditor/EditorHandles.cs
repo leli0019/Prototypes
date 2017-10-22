@@ -17,7 +17,6 @@ public class EditorHandles : Editor {
         SceneView.onSceneGUIDelegate -= OnSceneGUI;
         SceneView.onSceneGUIDelegate += OnSceneGUI;
 
-        Debug.Log("Constructor");
     }
 
     private void OnDestroy()

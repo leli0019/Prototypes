@@ -17,6 +17,7 @@ public class PrefabSpawningWindow : EditorWindow {
     public void OnGUI()
     {
         MaxPrefabsPerColumn = (int)(position.width / prefabSize);
+       
            
         DrawPrefabButtons();
     }

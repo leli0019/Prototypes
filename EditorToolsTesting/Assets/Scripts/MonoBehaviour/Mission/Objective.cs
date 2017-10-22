@@ -5,45 +5,50 @@ using UnityEngine;
 public abstract class Objective: MonoBehaviour {
 
 
-    [SerializeField]
-    protected string description;
-    public string Description { get { return description; } set { description = value; }}
+    //[SerializeField]
+    //protected string description;
+    //public string Description { get { return description; } set { description = value; }}
 
   //[NetworkData(typeof(bool),NetworkData.NetDatType.Inconsistent)]
     public bool isCompleted;
 
-    public delegate void ObjectiveEventDel();
+    //public delegate void ObjectiveEventDel();
 
-    public event ObjectiveEventDel onObjectiveStartEvent;
-    public event ObjectiveEventDel onObjectiveEndEvent;
+    //public event ObjectiveEventDel onObjectiveStartEvent;
+    //public event ObjectiveEventDel onObjectiveEndEvent;
 
 
-    protected GameObject player;
+    //protected GameObject player;
 
   
 
-    public  virtual void SetPlayer(GameObject aPlayer) { player = aPlayer; }
+    //public  virtual void SetPlayer(GameObject aPlayer) { player = aPlayer; }
 
     protected abstract bool CheckIsCompleted();
    protected virtual void CompleteObjective() { Complete(); }
     //protected virtual void CompleteObjective() { TryTransferOwnership(PhotonNetwork.player.ID); isCompleted = true; }
 
-    public virtual void OnObjectiveStart()
-    {
-        if (onObjectiveStartEvent != null)
-            onObjectiveStartEvent();
-    }
+    //public virtual void OnObjectiveStart()
+    //{
+    //    if (onObjectiveStartEvent != null)
+    //        onObjectiveStartEvent();
+    //}
  
    public virtual void Complete()
     {
+        Debug.Log("Completed");
+
         isCompleted = true;
 
-        if (onObjectiveEndEvent != null)
-            onObjectiveEndEvent();
+        //if (onObjectiveEndEvent != null)
+        //    onObjectiveEndEvent();
     }
 
-    public virtual void UpdateObjective()
+    public void Update()
     {
+        if (isCompleted)
+            return;
+
         if (CheckIsCompleted())
             CompleteObjective();
     }
