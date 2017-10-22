@@ -54,8 +54,11 @@ public class EditorHandles : Editor {
         if (Event.current == null)
             return;
 
+        if (EditorPrefs.GetBool("IsLevelEditorEnabled", false) == false)
+            return;
 
-        Vector2 currentMousePos = new Vector2(Event.current.mousePosition.x, Event.current.mousePosition.y);
+
+            Vector2 currentMousePos = new Vector2(Event.current.mousePosition.x, Event.current.mousePosition.y);
 
         Ray ray = HandleUtility.GUIPointToWorldRay(currentMousePos);
         RaycastHit hit;
@@ -64,8 +67,7 @@ public class EditorHandles : Editor {
         {
             Vector3 offset = Vector3.zero;
 
-            if (EditorPrefs.GetBool("IsLevelEditorEnabled", true))
-            {
+            
                 //offset = hit.normal;
 
                 //currentHandlePos.x = Mathf.Floor(hit.point.x - hit.normal.x * 0.001f + offset.x);
@@ -75,7 +77,7 @@ public class EditorHandles : Editor {
                 //currentHandlePos += new Vector3(0.5f, 0.5f, 0.5f);
                 
                 currentHandlePos = hit.point;
-            }
+            
 
         }
 
@@ -97,8 +99,9 @@ public class EditorHandles : Editor {
             return;
 
         Handles.color = Color.green;
-
         DrawHandlesCube(currentHandlePos);
+
+        
     }
 
     static void DrawHandlesCube(Vector3 center)

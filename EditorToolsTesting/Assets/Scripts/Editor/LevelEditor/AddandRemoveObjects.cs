@@ -94,7 +94,11 @@ public class AddandRemoveObjects : Editor {
 
                 case 2:
                     if (SelectedObject < m_levelObjects.objects.Count)
-                        AddObject(EditorHandles.currentHandlePos, m_levelObjects.objects[SelectedObject].Prefab);
+                    {
+                                          
+                            AddObject(EditorHandles.currentHandlePos, m_levelObjects.objects[SelectedObject].Prefab);
+                        
+                    }
                     break;
             }
 
@@ -145,14 +149,26 @@ public class AddandRemoveObjects : Editor {
         if (prefab == null)
             return;
 
-        GameObject newObject = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
-        newObject.transform.SetParent(LevelParent);
-        newObject.transform.position = pos;
+        Vector2 currentMousePos = new Vector2(Event.current.mousePosition.x, Event.current.mousePosition.y);
 
-        Undo.RegisterCreatedObjectUndo(newObject, "Create " + prefab.name);
+        Ray ray = HandleUtility.GUIPointToWorldRay(currentMousePos);
+        RaycastHit hit;
 
-        UnityEditor.SceneManagement.EditorSceneManager.MarkAllScenesDirty();
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Level")) == true)
+        {
 
+            GameObject newObject = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+            newObject.transform.SetParent(LevelParent);
+            newObject.transform.position = pos;
+
+            Quaternion newRot = Quaternion.FromToRotation(newObject.transform.up, hit.normal);
+            newObject.transform.rotation = newRot;
+
+
+            Undo.RegisterCreatedObjectUndo(newObject, "Create " + prefab.name);
+
+            UnityEditor.SceneManagement.EditorSceneManager.MarkAllScenesDirty();
+        }
     }
 
     public static void RemoveObject(Vector3 pos)
