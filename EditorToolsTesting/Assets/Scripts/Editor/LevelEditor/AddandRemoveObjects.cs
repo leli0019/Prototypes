@@ -156,9 +156,7 @@ public class AddandRemoveObjects : Editor {
             Vector3 offset = newObject.transform.position - renderer.bounds.min;
             newObject.transform.position += offset;
 
-            //Vector3 raisedPos = newObject.transform.position + new Vector3(0, newObject.transform.localScale.y * 0.5f, 0);
-            //newObject.transform.position = raisedPos;
-
+            
             Quaternion newRot = Quaternion.FromToRotation(newObject.transform.up, hit.normal);
             newObject.transform.rotation = newRot;
 
