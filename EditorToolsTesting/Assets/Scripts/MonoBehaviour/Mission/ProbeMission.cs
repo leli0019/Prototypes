@@ -8,23 +8,29 @@ public class ProbeMission : Mission
 
     private void Start()
     {
+        InitMission();
         StartMission();
+    }
+
+    private void InitMission()
+    {
+        foreach(Goal goal in transform.GetComponentsInChildren<Goal>())
+        {
+            listOfGoals.Add(goal);
+        }
     }
 
     public override void StartMission()//GameObject player)
     {
 
-
-        //  GameObject driver = GameObject.Find("Driver");
-
-
-        //foreach (Goal goal in listOfGoals)
-        //{
-        //    goal.SetPlayer(player);
-        //    goal.SetupSubObjectiveCallbacks();
-        //}
+        foreach (Goal goal in listOfGoals)
+        {
+            goal.InitGoal();
+        }
         listOfGoals[0].OnObjectiveStart();
         MissionStarted = true;
     }
+
+ 
 
 }

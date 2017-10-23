@@ -24,7 +24,7 @@ public abstract class Objective: MonoBehaviour {
     public event ObjectiveEventDel onObjectiveStartEvent;
     public event ObjectiveEventDel onObjectiveEndEvent;
 
-    [HideInInspector]
+   // [HideInInspector]
     public GameObject Player;
 
   

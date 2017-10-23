@@ -56,12 +56,15 @@ public class AddandRemoveObjects : Editor {
 
     static void OnSceneGUI(SceneView sceneView)
     {
+
         if (m_levelObjects == null)
             return;
 
         if (EditorPrefs.GetBool("IsLevelEditorEnabled", false) == false)
             return;
-        
+
+
+
         HandleLevelEditorPlacement();
 
     }

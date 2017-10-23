@@ -22,12 +22,23 @@ public abstract class Goal : Objective
 
     // Use this for initialization
 
-    public override void OnObjectiveStart()
+    public void InitGoal()
     {
-        base.OnObjectiveStart();
 
+        //Driver Objectives
+        foreach (Objective objective in transform.GetChild(0).GetComponentsInChildren<Objective>())
+        {
+            listOfDriverObjectives.Add(objective);
+        }
+        foreach (Objective objective in transform.GetChild(1).GetComponentsInChildren<Objective>())
+        {
+            listOfNavigatorObjectives.Add(objective);
+        }
+        foreach (Objective objective in transform.GetChild(2).GetComponentsInChildren<Objective>())
+        {
+            listOfScientistObjectives.Add(objective);
+        }
 
-        //myListOfObjectives = listOfDriverObjectives;
 
         switch (Player.name)
         {
@@ -43,33 +54,8 @@ public abstract class Goal : Objective
                 myListOfObjectives = listOfScientistObjectives;
                 break;
         }
-
-
-
-
     }
-
-    //public override void SetPlayer(GameObject aPlayer)
-    //{
-
-
-    //    base.SetPlayer(aPlayer);
-
-    //    foreach (Objective objective in listOfDriverObjectives)
-    //    {
-    //        objective.SetPlayer(aPlayer);
-    //    }
-    //    foreach (Objective objective in listOfNavigatorObjectives)
-    //    {
-    //        objective.SetPlayer(aPlayer);
-    //    }
-    //    foreach (Objective objective in listOfScientistObjectives)
-    //    {
-    //        objective.SetPlayer(aPlayer);
-    //    }
-
-    //}
-
+   
 
     public override void UpdateObjective()
     {

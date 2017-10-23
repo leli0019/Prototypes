@@ -8,6 +8,9 @@ public class GetToProbeGoal : Goal {
 
     protected override bool CheckIsCompleted()
     {
+        if (myListOfObjectives == null)
+            return false;
+
         return myListOfObjectives[myListOfObjectives.Count -1].isCompleted;
     }
 

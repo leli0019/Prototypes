@@ -12,12 +12,10 @@ public enum Roles {Driver,Navigator,Scientist };
 public abstract class Mission : MonoBehaviour
 {
 
-    [SerializeField]
-    protected List<Goal> listOfGoals;
-    [SerializeField]
-    protected Text goalUI;
-    [SerializeField]
-    protected Text objectiveUI;
+    
+    public List<Goal> listOfGoals;
+    public Text goalUI;
+    public Text objectiveUI;
 
     //protected Goal LastGoal;
 
@@ -34,6 +32,7 @@ public abstract class Mission : MonoBehaviour
     {
         if (MissionStarted == false)
             return;
+
 
 
         if (listOfGoals.Count > 0)

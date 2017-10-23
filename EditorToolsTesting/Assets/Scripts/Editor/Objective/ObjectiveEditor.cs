@@ -16,7 +16,10 @@ public class ObjectiveEditor : Editor
         {
             if (myParent == null)
             {
-                myParent = GameObject.FindGameObjectWithTag("Mission").transform;
+                if (GameObject.FindGameObjectWithTag("Mission"))
+                    myParent = GameObject.FindGameObjectWithTag("Mission").transform;
+                else
+                    return null;
             }
             return myParent;
         }
@@ -78,6 +81,21 @@ public class ObjectiveEditor : Editor
         GameObject scientistList = new GameObject();
         scientistList.transform.SetParent(goal.transform);
         scientistList.name = "ScientistObjectives";
+
+    }
+
+    public static void CreateMission(string name)
+    {
+        GameObject mission = new GameObject();
+        mission.name = name;
+        mission.tag = "Mission";
+
+        GameObject ui = Instantiate((GameObject)Resources.Load("UI"));
+
+        ProbeMission component = mission.AddComponent<ProbeMission>();
+        component.goalUI = ui.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>();
+        component.objectiveUI = ui.transform.GetChild(1).GetComponent<UnityEngine.UI.Text>();
+
 
     }
 
