@@ -45,7 +45,7 @@ public class Tools
 
         }
     }
-    public static int ObjectiveSelected = 0;
+    //public static int ObjectiveSelected = 0;
 
     //public static int ObjectiveSelected
     //{

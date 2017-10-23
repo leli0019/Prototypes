@@ -6,6 +6,8 @@ using UnityEditor;
 
 public class MissionEditorWindow : EditorWindow
 {
+    static int SelectedObjective = 0;
+
     static string objectiveName = string.Empty;
     static GameObject player = null;
     static GameObject target = null;
@@ -36,8 +38,8 @@ public class MissionEditorWindow : EditorWindow
 
         GUILayout.Label("<size=15><b> Objectives </b> </size>", style);
 
-        string[] labels = new string[] { "Proximity", "Custom" };
-        Tools.ObjectiveSelected = GUILayout.SelectionGrid(Tools.ObjectiveSelected, labels, 1, GUILayout.Height(50));
+        string[] labels = new string[] { "Proximity", "Goal" ,"Custom" };
+        SelectedObjective = GUILayout.SelectionGrid(SelectedObjective, labels, 1, GUILayout.Height(25 * labels.Length));
         //if (GUILayout.Button("Proximity", GUILayout.Width(100), GUILayout.Height(25)))
         //{
         //    ObjectiveEditor.CreateObjective<ProximityObjective>();
@@ -52,13 +54,14 @@ public class MissionEditorWindow : EditorWindow
 
         GUILayout.BeginArea(CenterBox, EditorStyles.helpBox);
 
-        switch (Tools.ObjectiveSelected)
+        switch (SelectedObjective)
         {
             case 0:
                 DrawProximity();
                 break;
 
             case 1:
+                DrawGoal();
                 break;
 
         }
@@ -77,13 +80,41 @@ public class MissionEditorWindow : EditorWindow
         player = (GameObject)EditorGUILayout.ObjectField("Player", player, typeof(GameObject), true, GUILayout.Width(350));
         target = (GameObject)EditorGUILayout.ObjectField("Target", target, typeof(GameObject), true, GUILayout.Width(350));
         radius = EditorGUILayout.FloatField("ZoneRadius", radius, GUILayout.Width(332));
+        GUILayout.Space(30);
 
+        ObjectiveEditor.MyParent = (Transform)EditorGUILayout.ObjectField("Parent", ObjectiveEditor.MyParent, typeof(Transform), true, GUILayout.Width(350));
         GUILayout.BeginHorizontal();
         GUILayout.Space(150);
         if (GUILayout.Button("Create Objective", GUILayout.Width(180), GUILayout.Height(30)))
         {
             ObjectiveEditor.CreateProximityObjective(objectiveName, player, target, radius);
         }
+
+
+        GUILayout.EndHorizontal();
+
+    }
+
+    static void DrawGoal()
+    {
+        GUIStyle style = new GUIStyle();
+        style.richText = true;
+        GUILayout.Label("<size=30><b> Goal </b> </size>", style);
+
+        GUILayout.Space(15);
+        objectiveName = EditorGUILayout.TextField("Goal Name", objectiveName, GUILayout.Width(332));
+        player = (GameObject)EditorGUILayout.ObjectField("Player", player, typeof(GameObject), true, GUILayout.Width(350));
+        GUILayout.Space(30);
+
+        ObjectiveEditor.MyParent = (Transform)EditorGUILayout.ObjectField("Parent", ObjectiveEditor.MyParent, typeof(Transform), true, GUILayout.Width(350));
+        GUILayout.BeginHorizontal();
+        GUILayout.Space(150);
+        if (GUILayout.Button("Create Goal", GUILayout.Width(180), GUILayout.Height(30)))
+        {
+            ObjectiveEditor.CreateGoal(objectiveName, player);
+        }
+
+
         GUILayout.EndHorizontal();
 
     }

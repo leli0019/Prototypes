@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class RadiusGizmo : MonoBehaviour {
 
+    public bool Show = true;
     public Color color = new Vector4(75, 225, 0, 100).normalized;
     public float radius;
 	// Use this for initialization
@@ -17,6 +18,9 @@ public class RadiusGizmo : MonoBehaviour {
 	}
     private void OnDrawGizmos()
     {
+        if (Show == false)
+            return;
+
         Gizmos.color = color;
         Gizmos.DrawSphere(transform.position, radius);
 

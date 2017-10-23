@@ -6,19 +6,26 @@ public abstract class Objective: MonoBehaviour {
 
 
     //[SerializeField]
-    //protected string description;
-    //public string Description { get { return description; } set { description = value; }}
+    protected string description;
+    public string Description
+    {
+        get
+        {
+            return description;
+        }
+        set { description = value; }
+    }
 
   //[NetworkData(typeof(bool),NetworkData.NetDatType.Inconsistent)]
     public bool isCompleted;
 
-    //public delegate void ObjectiveEventDel();
+    public delegate void ObjectiveEventDel();
 
-    //public event ObjectiveEventDel onObjectiveStartEvent;
-    //public event ObjectiveEventDel onObjectiveEndEvent;
+    public event ObjectiveEventDel onObjectiveStartEvent;
+    public event ObjectiveEventDel onObjectiveEndEvent;
 
-
-    //protected GameObject player;
+    [HideInInspector]
+    public GameObject Player;
 
   
 
@@ -28,23 +35,23 @@ public abstract class Objective: MonoBehaviour {
    protected virtual void CompleteObjective() { Complete(); }
     //protected virtual void CompleteObjective() { TryTransferOwnership(PhotonNetwork.player.ID); isCompleted = true; }
 
-    //public virtual void OnObjectiveStart()
-    //{
-    //    if (onObjectiveStartEvent != null)
-    //        onObjectiveStartEvent();
-    //}
- 
-   public virtual void Complete()
+    public virtual void OnObjectiveStart()
+    {
+        if (onObjectiveStartEvent != null)
+            onObjectiveStartEvent();
+    }
+
+    public virtual void Complete()
     {
         Debug.Log("Completed");
 
         isCompleted = true;
 
-        //if (onObjectiveEndEvent != null)
-        //    onObjectiveEndEvent();
+        if (onObjectiveEndEvent != null)
+            onObjectiveEndEvent();
     }
 
-    public void Update()
+    public virtual void UpdateObjective()
     {
         if (isCompleted)
             return;
