@@ -148,7 +148,7 @@ public class AddandRemoveObjects : Editor {
         Ray ray = HandleUtility.GUIPointToWorldRay(currentMousePos);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Level")) == true)
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Terrain")) == true)
         {
 
             GameObject newObject = (GameObject)PrefabUtility.InstantiatePrefab(prefab);

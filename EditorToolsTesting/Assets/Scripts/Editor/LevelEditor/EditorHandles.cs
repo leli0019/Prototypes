@@ -57,12 +57,12 @@ public class EditorHandles : Editor {
             return;
 
 
-            Vector2 currentMousePos = new Vector2(Event.current.mousePosition.x, Event.current.mousePosition.y);
+        Vector2 currentMousePos = new Vector2(Event.current.mousePosition.x, Event.current.mousePosition.y);
 
         Ray ray = HandleUtility.GUIPointToWorldRay(currentMousePos);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit,Mathf.Infinity,1 << LayerMask.NameToLayer("Level")) == true)
+        if (Physics.Raycast(ray, out hit,Mathf.Infinity,1 << LayerMask.NameToLayer("Terrain")) == true)
         {
             Vector3 offset = Vector3.zero;
 
