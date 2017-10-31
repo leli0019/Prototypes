@@ -127,6 +127,7 @@
     <Compile Include="Assets\Scripts\Editor\Gizmos\RadiusGizmoEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\Grid\GridEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\Grid\GridWindow.cs" />
+    <Compile Include="Assets\Scripts\Editor\Inspector\CustomInspector.cs" />
     <Compile Include="Assets\Scripts\Editor\LevelEditor\AddandRemoveObjects.cs" />
     <Compile Include="Assets\Scripts\Editor\LevelEditor\EditorHandles.cs" />
     <Compile Include="Assets\Scripts\Editor\LevelEditor\PrefabSpawningWindow.cs" />

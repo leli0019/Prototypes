@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\MonoBehaviour\Cheats\Cheats.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\Gizmos\RadiusGizmo.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\Grid\Grid.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviour\Inspector\CustomScript.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\Mission\GetToProbeGoal.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\Mission\Goal.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviour\Mission\Mission.cs" />
