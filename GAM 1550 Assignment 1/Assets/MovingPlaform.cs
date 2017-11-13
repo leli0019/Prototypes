@@ -5,11 +5,14 @@ using UnityEngine;
 public class MovingPlaform : MonoBehaviour {
 
 
+    public enum Direction { Forward, Backward, Up, Down , Left, Right}
+
+    public Direction dir;
+    public float speed = 0.5f;
+
     Vector3 startingPos;
     Vector3 endingPos;
     float percentage = 0.0f;
-    float speed = 0.5f;
-
     float travelDistance = 10.0f;
 
     bool towardsEnd = true;
@@ -17,7 +20,34 @@ public class MovingPlaform : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         startingPos = transform.position;
-        endingPos = startingPos + transform.forward * travelDistance;
+
+        Vector3 direction = Vector3.zero;
+        switch (dir)
+        {
+            case Direction.Forward:
+                direction = transform.forward;
+                break;
+            case Direction.Backward:
+                direction = -transform.forward;
+                break;
+            case Direction.Up:
+                direction = transform.up;
+                break;
+            case Direction.Down:
+                direction = -transform.up;
+                break;
+            case Direction.Left:
+                direction = -transform.right;
+                break;
+            case Direction.Right:
+                direction = transform.right;
+                break;
+
+        }
+
+
+
+        endingPos = startingPos + direction * travelDistance;
 		
 	}
 	

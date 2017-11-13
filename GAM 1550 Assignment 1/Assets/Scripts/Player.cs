@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 
     Rigidbody rig;
     public Transform footPos;
-    public Transform startingPos;
+     Vector3 startingPos;
 
     bool isInAir = false;
     bool isOnPlatform = false;
@@ -25,7 +25,8 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        transform.position = startingPos.position;
+        startingPos = transform.position;
+        //transform.position = startingPos.position;
         rig = GetComponent<Rigidbody>();
 
     }
@@ -34,8 +35,8 @@ public class Player : MonoBehaviour
     void Update()
     {
 
-        //Gravity
-        rig.AddForce(-transform.up * 9.8f, ForceMode.Force);
+        //Extra Gravity
+        rig.AddForce(-transform.up * 7.0f, ForceMode.Force);
 
         if (isInAir && transform.parent != null)
             transform.SetParent(null);
@@ -92,11 +93,21 @@ public class Player : MonoBehaviour
 
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        
+        if(collision.gameObject.tag == "Crusher" && collision.contacts[0].normal == Vector3.down)
+        {
+            Debug.Log(collision.contacts[0].normal);
+            Kill();
+        }
+    }
 
 
     void Kill()
     {
-        transform.position = startingPos.position;
+        transform.position = startingPos;
         deathCount++;
 
         deathText.text = "Death Count: " + deathCount;
