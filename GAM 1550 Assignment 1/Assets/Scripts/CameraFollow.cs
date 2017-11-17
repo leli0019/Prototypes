@@ -5,70 +5,63 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour {
 
 
-    public GameObject target;
-    Vector3 displacement;
+    public GameObject followPoint;
+    Vector3 followPos;
 
+    public GameObject camera;
+    public GameObject player;
 
-    float distanceToFollow = 10.0f;
-    float mouseX = 0.0f;
-    float mouseY = 0.0f;
+    Vector3 distanceToPlayer;
+
+    public float speed = 100.0f;
+    public float distanceToFollow = 10.0f;
+    public float clampAngle = 80.0f;
+
+     float mouseX = 0.0f;
+     float mouseY = 0.0f;
+     float xRot;
+     float yRot;
+   
 
 
    // public float followDistance = 7.0f;
   //  public float percentage;
 
 	// Use this for initialization
-	void Start () {
-        // target = GameObject.FindGameObjectWithTag("Player");
-        //target = GameObject.FindGameObjectWithTag("CameraEmpty");
-
-     //   displacement =  transform.position  - target.transform.position ;
-
+	void Start ()
+    {
+        Vector3 rotation = transform.localRotation.eulerAngles;
+        xRot = rotation.x;
+        yRot = rotation.y;
+       
     }
 
     private void Update()
     {
-        //mouseX = Input.GetAxis("Mouse X");
-        //mouseY = Input.GetAxis("Mouse Y");
+        mouseX = Input.GetAxis("Mouse X");
+        mouseY = Input.GetAxis("Mouse Y");
+
+
+         xRot += mouseX * speed * Time.deltaTime;
+         yRot += mouseY * speed* Time.deltaTime;
+
+        xRot = Mathf.Clamp(xRot, -clampAngle, clampAngle);
+
+        Quaternion rotation = Quaternion.Euler(yRot, -xRot, 180.0f);
+        transform.rotation = rotation;
     }
 
     // Update is called once per frame
     void LateUpdate () {
+        UpdateCamera();
 
-        //Vector3 dir = new Vector3(0, 0, -distanceToFollow);
-        //Quaternion rotation = Quaternion.Euler(mouseX, mouseY, 0);
-
-        //transform.position = target.transform.position + rotation * dir;
-
-        //float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
-        //transform.Rotate(0, mouseX, 0);
-
-        //float desiredAngle = target.transform.eulerAngles.y;
-        //Quaternion rotation = Quaternion.Euler(0, desiredAngle, 0);
-        //transform.position = target.transform.position - (rotation * displacement);
-
-
-        //Vector3 desiredPos = target.transform.position + displacement;
-        //Vector3 newPos = Vector3.Lerp(transform.position, desiredPos, Time.deltaTime);
-        //transform.position = newPos;
-
-        //  transform.position = Vector3.Lerp(FromPos.transform.position, target.transform.position, percentage);
-
-        //Vector3 displacement = target.transform.position - transform.position;
-        //if (displacement.magnitude > followDistance)
-        //{
-        //   transform.position = target.transform.position - displacement.normalized * followDistance;
-        //}
-
-        //Debug.Log(displacement.magnitude);
-
-
-        transform.LookAt(target.transform.position + new Vector3(0,0.5f,0) , Vector3.up);
-        ////transform.rotation = target.transform.rotation;
-
-
-        //transform.position = new Vector3(transform.position.x, 5.0f, transform.position.z);
 	}
+
+    void UpdateCamera()
+    {
+        float step = speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, followPoint.transform.position, step);
+    }
 
     
 }
