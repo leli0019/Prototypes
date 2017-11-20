@@ -6,12 +6,12 @@ public class CameraFollow : MonoBehaviour {
 
 
     public GameObject followPoint;
-    Vector3 followPos;
+    //Vector3 followPos;
 
-    public GameObject camera;
+   // public GameObject camera;
     public GameObject player;
 
-    Vector3 distanceToPlayer;
+  //  public float distanceToPlayer;
 
     public float speed = 100.0f;
     public float distanceToFollow = 10.0f;
@@ -30,9 +30,11 @@ public class CameraFollow : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        Vector3 rotation = transform.localRotation.eulerAngles;
-        xRot = rotation.x;
-        yRot = rotation.y;
+        //Vector3 rotation = transform.localRotation.eulerAngles;
+        //xRot = rotation.x;
+        //yRot = rotation.y;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
        
     }
 
@@ -41,28 +43,68 @@ public class CameraFollow : MonoBehaviour {
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
 
+        player.transform.Rotate(Vector3.up, mouseX * speed * Time.deltaTime);
 
-         xRot += mouseX * speed * Time.deltaTime;
-         yRot += mouseY * speed* Time.deltaTime;
 
-        xRot = Mathf.Clamp(xRot, -clampAngle, clampAngle);
+        transform.Rotate(-Vector3.right, mouseY * speed * Time.deltaTime);
 
-        Quaternion rotation = Quaternion.Euler(yRot, -xRot, 180.0f);
-        transform.rotation = rotation;
+        //Vector3 newPos = followPoint.transform.position;
+
+       // newPos.x += -mouseX * speed * Time.deltaTime;
+       // newPos.y += mouseY * speed * Time.deltaTime;
+
+
+       // followPoint.transform.position = newPos;
+
+
+       // Vector3 displacement = player.transform.position - transform.position;
+
+       // Vector3 behindPlayer = -player.transform.forward * distanceToFollow;
+
+       // if(displacement.magnitude > distanceToFollow)
+        {
+        }
+
+
+
+        // xRot += mouseX * speed * Time.deltaTime;
+        // yRot += mouseY * speed* Time.deltaTime;
+
+        //xRot = Mathf.Clamp(xRot, -clampAngle, clampAngle);
+
+        //Quaternion rotation = Quaternion.Euler(yRot, -xRot, 180.0f);
+        //transform.rotation = rotation;
     }
 
     // Update is called once per frame
     void LateUpdate () {
-        UpdateCamera();
 
-	}
+        //RaycastHit ray;
+        //if(Physics.Raycast(transform.position, -player.transform.forward,out ray,10))
+        //{
+        //    Vector3 displacement = transform.position - ray.point;
+
+        //    transform.position += displacement.normalized * 2;
+
+        //  //  transform.position += transform.forward * 
+        //}
+
+        // UpdateCamera();
+      //  transform.LookAt(followPoint.transform);
+
+
+    }
 
     void UpdateCamera()
     {
-        float step = speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, followPoint.transform.position, step);
+       // float step = speed * Time.deltaTime;
+       // transform.position = Vector3.MoveTowards(transform.position, followPoint.transform.position, step);
     }
 
-    
+    private void OnDrawGizmos()
+    {
+     //   Gizmos.DrawLine(transform.position, -player.transform.forward * 10);
+    }
+
 }
 

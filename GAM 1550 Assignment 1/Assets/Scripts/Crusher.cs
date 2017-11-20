@@ -2,24 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Crusher : MonoBehaviour
+public class Crusher: MonoBehaviour
 {
+   public Vector3 startingPos;
 
-    Vector3 startingPos;
-
-    // Use this for initialization
-    void Start()
+    public void Fall(Vector3 pos)
     {
-        startingPos = transform.position;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        startingPos = pos;
 
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
         transform.position = startingPos;
-    }
-    // Update is called once per frame
-    void Update()
-    {
 
     }
+ 
 }

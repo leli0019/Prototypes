@@ -59,10 +59,12 @@ public class Player : MonoBehaviour
 
 
         if (Input.GetKey(KeyCode.A))
-            transform.Rotate(transform.up, -RotateSpeed * Time.deltaTime);
+            transform.position += -transform.right * MovementSpeed * Time.deltaTime;
+
 
         if (Input.GetKey(KeyCode.D))
-            transform.Rotate(transform.up, RotateSpeed * Time.deltaTime);
+            transform.position += transform.right * MovementSpeed * Time.deltaTime;
+
 
         if (Input.GetKeyDown(KeyCode.Space) && isInAir == false)
             rig.AddForce(transform.up * JumpSpeed, ForceMode.Impulse);
@@ -99,7 +101,6 @@ public class Player : MonoBehaviour
         
         if(collision.gameObject.tag == "Crusher" && collision.contacts[0].normal == Vector3.down)
         {
-            Debug.Log(collision.contacts[0].normal);
             Kill();
         }
     }
