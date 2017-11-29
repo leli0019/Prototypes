@@ -12,13 +12,12 @@ public class Player : MonoBehaviour
 
     Rigidbody rig;
     public Transform footPos;
-     Vector3 startingPos;
+    Vector3 startingPos;
 
     bool isInAir = false;
     bool isOnPlatform = false;
 
     int deathCount = 0;
-
     public Text deathText;
 
 
@@ -43,7 +42,7 @@ public class Player : MonoBehaviour
 
         HandleInput();
         HandleGroundCollision();
-      //  HandleInAir();
+        //  HandleInAir();
 
 
     }
@@ -98,21 +97,50 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
 
-        
-        if(collision.gameObject.tag == "Crusher" && collision.contacts[0].normal == Vector3.down)
+        if (collision.gameObject.tag == "Crusher" && collision.contacts[0].normal == Vector3.down)
         {
             Kill();
+        }
+
+        if (collision.gameObject.tag == "Spring" && collision.contacts[0].normal == Vector3.up)
+        {
+            rig.AddForce(Vector3.up * collision.gameObject.GetComponent<Spring>().springForce, ForceMode.Impulse);
+        }
+
+        if (collision.gameObject.tag == "Win")
+        {
+            ResetPlayer();
+            StartCoroutine(ShowWinScreen());
+
         }
     }
 
 
     void Kill()
     {
-        transform.position = startingPos;
+        ResetPlayer();
         deathCount++;
-
         deathText.text = "Death Count: " + deathCount;
     }
+
+    void ResetPlayer()
+    {
+        transform.position = startingPos;
+        transform.rotation = Quaternion.Euler(0.0f, 180.0f, 0.0f);
+        GameObject.FindGameObjectWithTag("MainCamera").transform.position = transform.position - transform.forward * 2;
+        GameObject.FindGameObjectWithTag("MainCamera").transform.rotation = transform.rotation;
+    }
+
+    IEnumerator ShowWinScreen()
+    {
+        GameObject.Find("WinScreen").GetComponent<Canvas>().enabled = true;
+
+        yield return new WaitForSeconds(2);
+
+        GameObject.Find("WinScreen").GetComponent<Canvas>().enabled = false;
+
+    }
+
 
 
 }

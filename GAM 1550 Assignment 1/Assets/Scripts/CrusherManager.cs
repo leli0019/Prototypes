@@ -12,8 +12,6 @@ public class CrusherManager : MonoBehaviour
 
     ObjectPool pool;
 
-
-
     // Use this for initialization
     void Start()
     {
@@ -32,9 +30,9 @@ public class CrusherManager : MonoBehaviour
     void Update()
     {
 
-        for(int i = pool.activeObjects.Count; i > 0; i--)
+        for (int i = pool.activeObjects.Count; i > 0; i--)
         {
-            GameObject activeObj = pool.activeObjects[i -1];
+            GameObject activeObj = pool.activeObjects[i - 1];
             if (activeObj.transform.position.y <= minHeight)
             {
                 Crusher crusher = activeObj.GetComponent<Crusher>();

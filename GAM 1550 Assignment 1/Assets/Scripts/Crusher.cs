@@ -10,7 +10,6 @@ public class Crusher: MonoBehaviour
     {
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         startingPos = pos;
-
         transform.position = startingPos;
 
     }

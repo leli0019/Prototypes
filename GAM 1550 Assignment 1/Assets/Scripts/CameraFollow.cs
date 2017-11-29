@@ -2,40 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour {
+public class CameraFollow : MonoBehaviour
+{
 
 
-    public GameObject followPoint;
-    //Vector3 followPos;
-
-   // public GameObject camera;
+    public GameObject lookAtPoint;
+    Vector3 followPos;
     public GameObject player;
 
-  //  public float distanceToPlayer;
-
-    public float speed = 100.0f;
-    public float distanceToFollow = 10.0f;
-    public float clampAngle = 80.0f;
-
-     float mouseX = 0.0f;
-     float mouseY = 0.0f;
-     float xRot;
-     float yRot;
-   
+    public float lookSpeed = 100.0f;
+    float mouseX = 0.0f;
+    float mouseY = 0.0f;
 
 
-   // public float followDistance = 7.0f;
-  //  public float percentage;
-
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
-        //Vector3 rotation = transform.localRotation.eulerAngles;
-        //xRot = rotation.x;
-        //yRot = rotation.y;
+     
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-       
+
     }
 
     private void Update()
@@ -43,67 +29,35 @@ public class CameraFollow : MonoBehaviour {
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
 
-        player.transform.Rotate(Vector3.up, mouseX * speed * Time.deltaTime);
+        lookAtPoint.transform.position += new Vector3(0, mouseY * 0.1f, 0);
+        float yClamped = Mathf.Clamp(lookAtPoint.transform.position.y, player.transform.position.y - 5, player.transform.position.y + 5);
+        Vector3 clampedHeight = new Vector3(lookAtPoint.transform.position.x, yClamped, lookAtPoint.transform.position.z);
+        lookAtPoint.transform.position = clampedHeight;
 
 
-        transform.Rotate(-Vector3.right, mouseY * speed * Time.deltaTime);
+        player.transform.Rotate(Vector3.up, mouseX * lookSpeed * Time.deltaTime);
+        transform.Rotate(-Vector3.right, mouseY * lookSpeed * Time.deltaTime);
 
-        //Vector3 newPos = followPoint.transform.position;
-
-       // newPos.x += -mouseX * speed * Time.deltaTime;
-       // newPos.y += mouseY * speed * Time.deltaTime;
-
-
-       // followPoint.transform.position = newPos;
-
-
-       // Vector3 displacement = player.transform.position - transform.position;
-
-       // Vector3 behindPlayer = -player.transform.forward * distanceToFollow;
-
-       // if(displacement.magnitude > distanceToFollow)
-        {
-        }
-
-
-
-        // xRot += mouseX * speed * Time.deltaTime;
-        // yRot += mouseY * speed* Time.deltaTime;
-
-        //xRot = Mathf.Clamp(xRot, -clampAngle, clampAngle);
-
-        //Quaternion rotation = Quaternion.Euler(yRot, -xRot, 180.0f);
-        //transform.rotation = rotation;
     }
 
     // Update is called once per frame
-    void LateUpdate () {
+    void LateUpdate()
+    {
 
+
+        // Vector3 rayDirection = transform.position - player.transform.position;  
         //RaycastHit ray;
-        //if(Physics.Raycast(transform.position, -player.transform.forward,out ray,10))
+        //if (Physics.Raycast(player.transform.position, rayDirection.normalized, out ray, rayDirection.magnitude, ~(1 << LayerMask.NameToLayer("Player"))))
         //{
-        //    Vector3 displacement = transform.position - ray.point;
+        //    Debug.Log("Hitting Something");
+        //    followPos = player.transform.position + rayDirection.normalized * (ray.distance * 0.9f);
 
-        //    transform.position += displacement.normalized * 2;
-
-        //  //  transform.position += transform.forward * 
         //}
+        //else
+        followPos = player.transform.position - player.transform.forward * 3.0f + Vector3.up * 2;
+        transform.position = Vector3.Lerp(transform.position, followPos, Mathf.SmoothStep(0.0f, 1.0f, Time.deltaTime * 1000));
+        transform.LookAt(lookAtPoint.transform);
 
-        // UpdateCamera();
-      //  transform.LookAt(followPoint.transform);
-
-
-    }
-
-    void UpdateCamera()
-    {
-       // float step = speed * Time.deltaTime;
-       // transform.position = Vector3.MoveTowards(transform.position, followPoint.transform.position, step);
-    }
-
-    private void OnDrawGizmos()
-    {
-     //   Gizmos.DrawLine(transform.position, -player.transform.forward * 10);
     }
 
 }

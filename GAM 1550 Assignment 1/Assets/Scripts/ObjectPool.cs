@@ -4,19 +4,8 @@ using UnityEngine;
 
 public class ObjectPool{
 
-    public  List<GameObject> activeObjects;//= new List<GameObject>();
-    public  List<GameObject> inactiveObjects;// = new List<GameObject>();
-
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public  List<GameObject> activeObjects;
+    public  List<GameObject> inactiveObjects;
 
     public ObjectPool(GameObject go, float size)
     {
